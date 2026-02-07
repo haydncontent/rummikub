@@ -306,7 +306,7 @@ void test_all() {
 
 #include <cstdio> /* sscanf */
 int main( int argc, char *argv[] ) {
-    if (argc >1) {
+    /*if (argc >1) {
         int test = 0;
         std::sscanf(argv[1],"%i",&test);
         try {
@@ -320,8 +320,8 @@ int main( int argc, char *argv[] ) {
         } catch( const char* msg) {
             std::cerr << msg << std::endl;
         }
-    }
-
+    }*/
+    //test3();
 
     return 0;
 }

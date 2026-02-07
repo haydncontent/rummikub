@@ -12,7 +12,7 @@ struct Tile {
 	Color   color;
 };
 
-std::ostream& operator<<(std::ostream& os, Tile const& t) {
+inline std::ostream& operator<<(std::ostream& os, Tile const& t) {
 	os << "{ " << t.denomination << ",";
 	switch (t.color) {
 	case Red:      os << "R"; break;
@@ -59,7 +59,7 @@ private:
 	bool IsGroupValid(const std::vector<Tile>& group);
 
 	void ExecuteAction(const Action & action, const Tile & tile);
-	void UndoAction(const Action & action, const Tile & tile);
+	void UndoAction(const Action & action);
 
 	bool solve(int hand_index);
 
