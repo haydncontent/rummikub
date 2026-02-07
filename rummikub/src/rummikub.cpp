@@ -16,18 +16,19 @@ void RummiKub::Solve()
 
 std::vector<RummiKub::Action> RummiKub::GetOptions(int hand_index)
 {
+    Tile tile = hand[hand_index];
     std::vector < RummiKub::Action > actions;
 
+    for (int i = 0; i < groups.size(); ++i)
+        if (CanAddToGroup(i, tile)) actions.push_back(Action{ ActionType::ADD_TO_GROUP, i });
 
+    for (int i = 0; i < runs.size(); ++i)
+        if (CanAddToRun(i, tile)) actions.push_back(Action{ ActionType::ADD_TO_RUN, i });
 
-    for (const std::vector<Tile> & group : groups)
-    {
+    actions.push_back(Action{ ActionType::NEW_RUN, -1 });
+    actions.push_back(Action{ ActionType::NEW_GROUP, -1});
 
-    }
-
-
-
-    return std::vector<Action>();
+    return actions;
 }
 
 bool RummiKub::CanAddToRun(int run_index, const Tile& tile)
@@ -112,32 +113,40 @@ bool RummiKub::solve(int hand_index)
 {
    // base case
    // out of tiles - check if runs and groups are legal
+    bool legal = false;
+    for (const auto& run : runs)
+        legal = IsRunValid(run);
+
+    for (const auto& group : groups)
+        legal = IsGroupValid(group);
+
    // return true if yest and exit
+    if (legal) return true;
 
-    //Action actions[] = GetOptions();
+    std::vector<Action> actions = GetOptions(hand_index);
 
-    //// for debugging
-    //// print current tile and table 
-    //std::cout << "\n=====================================================\n";
-    //std::cout << "table: current tile " << tile << "\n";
-    //for (auto const& g : groups) {
-    //    std::cout << "(G( ";
-    //    for (auto const& t : g) { std::cout << t << " "; }
-    //    std::cout << " )))\n";
-    //}
-    //for (auto const& r : runs) {
-    //    std::cout << "(R( ";
-    //    for (auto const& t : r) { std::cout << t << " "; }
-    //    std::cout << " )))\n";
-    //}
+    Tile tile = hand[hand_index];
+    std::cout << "\n=====================================================\n";
+    std::cout << "table: current tile " << tile << "\n";
+    for (auto const& g : groups) {
+        std::cout << "(G( ";
+        for (auto const& t : g) { std::cout << t << " "; }
+        std::cout << " )))\n";
+    }
+    for (auto const& r : runs) {
+        std::cout << "(R( ";
+        for (auto const& t : r) { std::cout << t << " "; }
+        std::cout << " )))\n";
+    }
 
-
-    //for (auto action : actions) {
-    //    //if action is legal execute it
-    //    //    bool result = solve(...); // recursive call
-    //    //if solved - return true; // stop recursion
-    //    //undo the action
-    //}
+    for (auto action : actions) 
+    {
+        //if action is legal execute it
+        
+        //    bool result = solve(...); // recursive call
+        //if solved - return true; // stop recursion
+        //undo the action
+    }
 
 
 
