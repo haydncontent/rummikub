@@ -305,23 +305,43 @@ void test_all() {
 }
 
 #include <cstdio> /* sscanf */
+#include <chrono>
 int main( int argc, char *argv[] ) {
-    /*if (argc >1) {
+    if (argc >1) {
         int test = 0;
         std::sscanf(argv[1],"%i",&test);
         try {
+            auto start = std::chrono::steady_clock::now();
             pTests[test]();
+            auto end = std::chrono::steady_clock::now();
+            auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+            std::cout << "Test " << test << " took " << ms << " ms";
+            if (ms < 200) {
+                std::cout << " (PASS: under 200 ms)" << std::endl;
+            } else {
+                std::cout << " (FAIL: 200 ms or more)" << std::endl;
+            }
         } catch( const char* msg) {
             std::cerr << msg << std::endl;
         }
     } else {
         try {
-            test_all();
+            for (size_t i = 0; i < sizeof(pTests)/sizeof(pTests[0]); ++i) {
+                auto start = std::chrono::steady_clock::now();
+                pTests[i]();
+                auto end = std::chrono::steady_clock::now();
+                auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+                std::cout << "Test " << i << " took " << ms << " ms";
+                if (ms < 200) {
+                    std::cout << " (PASS: under 200 ms)" << std::endl;
+                } else {
+                    std::cout << " (FAIL: 200 ms or more)" << std::endl;
+                }
+            }
         } catch( const char* msg) {
             std::cerr << msg << std::endl;
         }
-    }*/
-    //test3();
+    }
 
     return 0;
 }
