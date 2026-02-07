@@ -58,8 +58,8 @@ private:
 	bool IsRunValid(const std::vector<Tile>& run);
 	bool IsGroupValid(const std::vector<Tile>& group);
 
-	void ExecuteAction(ActionType type);
-	void UndoAction(ActionType type);
+	void ExecuteAction(const Action & action, const Tile & tile);
+	void UndoAction(const Action & action, const Tile & tile);
 
 	bool solve(int hand_index);
 
